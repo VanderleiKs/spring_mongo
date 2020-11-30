@@ -2,6 +2,7 @@ package spring_mongo.spring.domain.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import spring_mongo.spring.domain.DTO.AuthorDTO;
@@ -9,6 +10,7 @@ import spring_mongo.spring.domain.DTO.AuthorDTO;
 @Document
 public class Post {
 
+    @Id
     private String id;
     private LocalDateTime date;
     private String title;
