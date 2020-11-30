@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import spring_mongo.spring.domain.exception.UserException;
+import spring_mongo.spring.domain.exception.DomainException;
 
 @ControllerAdvice
 @RestControllerAdvice
 public class ResourceExceptionHandle extends ResponseEntityExceptionHandler{
 
-    @ExceptionHandler(UserException.class)
-    public ResponseEntity<Object> userNotFound(UserException ex, HttpServletRequest request){
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<Object> userNotFound(DomainException ex, HttpServletRequest request){
             HttpStatus status = HttpStatus.NOT_FOUND;
         return ResponseEntity
                 .status(status)

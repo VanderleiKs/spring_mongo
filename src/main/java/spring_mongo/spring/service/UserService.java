@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring_mongo.spring.domain.DTO.UserDTO;
 import spring_mongo.spring.domain.entity.Post;
 import spring_mongo.spring.domain.entity.User;
-import spring_mongo.spring.domain.exception.UserException;
+import spring_mongo.spring.domain.exception.DomainException;
 import spring_mongo.spring.repository.UserRepository;
 
 @Service
@@ -28,13 +28,13 @@ public class UserService {
 
     public ResponseEntity<UserDTO> findById(String id){
         UserDTO user = new UserDTO(userRepository.findById(id)
-                                    .orElseThrow(() -> new UserException("User não encontrado")));
+                                    .orElseThrow(() -> new DomainException("User não encontrado")));
         return ResponseEntity.ok().body(user);
     }
 
     public ResponseEntity<List<Post>> findPosts(String id){
         User user = userRepository.findById(id)
-                                    .orElseThrow(() -> new UserException("User não encontrado"));
+                                    .orElseThrow(() -> new DomainException("User não encontrado"));
         return ResponseEntity.ok().body(user.getPosts());
     }
 
@@ -51,7 +51,7 @@ public class UserService {
     }
 
     public ResponseEntity<String> updateUser(User user){
-        User userDB = userRepository.findById(user.getId()).orElseThrow(() -> new UserException("User não encontrado"));
+        User userDB = userRepository.findById(user.getId()).orElseThrow(() -> new DomainException("User não encontrado"));
         userDB.setName(user.getName());
         userDB.setEmail(user.getEmail());
         userRepository.save(userDB);

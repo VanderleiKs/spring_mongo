@@ -1,9 +1,9 @@
 package spring_mongo.spring.domain.exception;
 
-public class UserException extends RuntimeException {
+public class DomainException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public UserException(String msg){
+    public DomainException(String msg){
         super(msg);
     }
     
