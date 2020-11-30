@@ -1,5 +1,6 @@
 package spring_mongo.spring.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,14 @@ public class PostService {
 
     public List<Post> findTitle(String text){
         String find = URL.decodeString(text);
-        List<Post> list = postRepository.findByTitleContainingIgnoreCase(find);
+        List<Post> list = postRepository.findByTitle(find);
         return list;
+    }
+
+    public List<Post> fullSearch(String text, String minDate, String maxDate){
+        LocalDate min = URL.converterDate(minDate, LocalDate.EPOCH);
+        LocalDate max = URL.converterDate(maxDate, LocalDate.now());
+        max = max.plusDays(1);
+        return postRepository.fullSearch(text, min, max);
     }
 }
