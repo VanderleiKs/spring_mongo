@@ -1,5 +1,7 @@
 package spring_mongo.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,22 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import spring_mongo.spring.domain.DTO.UserDTO;
+import spring_mongo.spring.domain.entity.Post;
 import spring_mongo.spring.domain.entity.User;
 import spring_mongo.spring.service.UserService;
 
 @RestController
 @RequestMapping("/users")
-@Api(value = "user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping
-    @ApiOperation(value = "users")
     public ResponseEntity<Page<UserDTO>> getUsers(
         @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "sizePage", defaultValue = "2") Integer sizePage
@@ -39,8 +38,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable String id){
+    public ResponseEntity<UserDTO> findById(@PathVariable String id){
         return userService.findById(id);
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        return userService.findPosts(id);
     }
 
     @PutMapping
@@ -49,7 +53,6 @@ public class UserController {
     }
 
     @PostMapping
-    @ApiOperation(value = "new User")
     public ResponseEntity<String> saveNewUser(@RequestBody UserDTO user){
        return userService.saveNewUser(user);
     }

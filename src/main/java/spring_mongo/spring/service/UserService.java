@@ -1,6 +1,7 @@
 package spring_mongo.spring.service;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import spring_mongo.spring.domain.DTO.UserDTO;
+import spring_mongo.spring.domain.entity.Post;
 import spring_mongo.spring.domain.entity.User;
 import spring_mongo.spring.domain.exception.UserException;
 import spring_mongo.spring.repository.UserRepository;
@@ -24,10 +26,16 @@ public class UserService {
         return userRepository.findAll(pageRequest); 
     }
 
-    public ResponseEntity<User> findById(String id){
+    public ResponseEntity<UserDTO> findById(String id){
+        UserDTO user = new UserDTO(userRepository.findById(id)
+                                    .orElseThrow(() -> new UserException("User não encontrado")));
+        return ResponseEntity.ok().body(user);
+    }
+
+    public ResponseEntity<List<Post>> findPosts(String id){
         User user = userRepository.findById(id)
                                     .orElseThrow(() -> new UserException("User não encontrado"));
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
     public ResponseEntity<String> saveNewUser(UserDTO userDTO){
