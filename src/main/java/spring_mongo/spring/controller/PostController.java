@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import spring_mongo.spring.domain.entity.Post;
@@ -29,4 +30,9 @@ public class PostController {
         return ResponseEntity.ok().body(postService.findById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Post>> findTitle(
+        @RequestParam(value = "text", defaultValue = "") String text){
+    return ResponseEntity.ok().body(postService.findTitle(text));
+    }
 }

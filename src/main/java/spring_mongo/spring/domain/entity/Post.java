@@ -1,11 +1,14 @@
 package spring_mongo.spring.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import spring_mongo.spring.domain.DTO.AuthorDTO;
+import spring_mongo.spring.domain.DTO.CommentDTO;
 
 @Document
 public class Post {
@@ -16,6 +19,8 @@ public class Post {
     private String title;
     private String body;
     private AuthorDTO author;
+
+    private List<CommentDTO> comments = new ArrayList<>();
 
     public Post(){}
 
@@ -61,5 +66,9 @@ public class Post {
 
     public void setAuthor(AuthorDTO author) {
         this.author = author;
+    }
+
+    public List<CommentDTO> getComments() {
+        return comments;
     }
 }
